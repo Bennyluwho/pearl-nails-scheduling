@@ -1,29 +1,15 @@
-# Environment variables
+# Environment files
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# IDEs
-.idea/
-.vscode/
-*.iml
-
-# Operating systems
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
+.env.*.local
 
 # Java / Spring Boot
 backend/target/
 backend/.classpath
 backend/.project
 backend/.settings/
-backend/*.jar
+*.class
+*.jar
 
 # Node / Next.js
 frontend/node_modules/
@@ -32,10 +18,23 @@ frontend/out/
 frontend/dist/
 frontend/coverage/
 
-# Test containers and local data
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Local database or temporary data
 postgres-data/
 tmp/
 
-# Local certificates
+# Secrets and certificates
 *.pem
 *.key
