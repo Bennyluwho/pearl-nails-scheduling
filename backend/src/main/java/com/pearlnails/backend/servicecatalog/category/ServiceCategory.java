@@ -69,8 +69,20 @@ public class ServiceCategory {
         this.description = description;
     }
 
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
     public Boolean getActive() {
         return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public OffsetDateTime getCreatedAt() {
