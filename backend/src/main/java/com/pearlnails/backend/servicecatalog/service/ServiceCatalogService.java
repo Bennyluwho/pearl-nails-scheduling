@@ -9,6 +9,9 @@ import com.pearlnails.backend.servicecatalog.category.ServiceCategoryRepository;
 import com.pearlnails.backend.servicecatalog.service.dto.CreateServiceRequest;
 import com.pearlnails.backend.servicecatalog.service.dto.ServiceResponse;
 import com.pearlnails.backend.servicecatalog.service.dto.UpdateServiceRequest;
+import com.pearlnails.backend.common.exception.DuplicateResourceException;
+import com.pearlnails.backend.common.exception.InvalidOperationException;
+import com.pearlnails.backend.common.exception.ResourceNotFoundException;
 
 @org.springframework.stereotype.Service
 public class ServiceCatalogService {
@@ -63,7 +66,7 @@ public class ServiceCatalogService {
                 normalizedName
             )
         ) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                 "A service with that name already exists in this category"
             );
         }
@@ -125,7 +128,7 @@ public class ServiceCatalogService {
                 )
                 .filter(existing -> !existing.getId().equals(id))
                 .ifPresent(existing -> {
-                    throw new IllegalArgumentException(
+                    throw new DuplicateResourceException(
                         "A service with that name already exists in this category"
                     );
                 });
@@ -182,7 +185,7 @@ public class ServiceCatalogService {
         return serviceRepository
             .findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException(
+                new ResourceNotFoundException(
                     "Service not found: " + id
                 )
             );
@@ -192,13 +195,13 @@ public class ServiceCatalogService {
         ServiceCategory category = categoryRepository
             .findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException(
+                new ResourceNotFoundException(
                     "Service category not found: " + id
                 )
             );
 
         if (!category.getActive()) {
-            throw new IllegalArgumentException(
+            throw new InvalidOperationException(
                 "Cannot use an inactive service category"
             );
         }

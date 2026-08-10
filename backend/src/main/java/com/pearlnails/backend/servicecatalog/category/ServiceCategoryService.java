@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pearlnails.backend.servicecatalog.category.dto.CreateServiceCategoryRequest;
 import com.pearlnails.backend.servicecatalog.category.dto.ServiceCategoryResponse;
 import com.pearlnails.backend.servicecatalog.category.dto.UpdateServiceCategoryRequest;
+import com.pearlnails.backend.common.exception.DuplicateResourceException;
+import com.pearlnails.backend.common.exception.ResourceNotFoundException;
 
 @Service
 public class ServiceCategoryService {
@@ -43,7 +45,7 @@ public class ServiceCategoryService {
         String normalizedName = request.name().trim();
 
         if (categoryRepository.existsByNameIgnoreCase(normalizedName)) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                 "A service category with that name already exists"
             );
         }
@@ -78,8 +80,8 @@ public class ServiceCategoryService {
                 .findByNameIgnoreCase(normalizedName)
                 .filter(existing -> !existing.getId().equals(id))
                 .ifPresent(existing -> {
-                    throw new IllegalArgumentException(
-                        "A service category with that name already exists"
+                    throw new ResourceNotFoundException(
+                        "Service category not found: " + id
                     );
                 });
 
