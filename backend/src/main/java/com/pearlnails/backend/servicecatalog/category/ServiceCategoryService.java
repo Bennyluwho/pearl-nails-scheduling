@@ -113,7 +113,7 @@ public class ServiceCategoryService {
         return categoryRepository
             .findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException(
+                new ResourceNotFoundException(
                     "Service category not found: " + id
                 )
             );
