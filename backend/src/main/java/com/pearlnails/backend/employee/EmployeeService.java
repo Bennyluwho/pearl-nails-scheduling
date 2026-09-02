@@ -68,19 +68,19 @@ public class EmployeeService {
     ) {
         Employee employee = findEmployeeById(id);
 
-        if (request.firstName() == null) {
+        if (request.firstName() != null) {
             employee.setFirstName(
                 request.firstName().trim()
             );
         }
 
-        if (request.lastName() == null) {
+        if (request.lastName() != null) {
             employee.setLastName(
                 request.lastName().trim()
             );
         }
     
-        if (request.displayName() == null) {
+        if (request.displayName() != null) {
             employee.setDisplayName(
                 normalizeNullable(request.displayName())
             );
