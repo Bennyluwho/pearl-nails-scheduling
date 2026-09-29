@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import type { SalonService } from "@/lib/api/serviceCatalog";
+import EmployeeServicesManager from "./EmployeeServicesManager";
 
 import {
   deactivateEmployee,
@@ -13,16 +15,18 @@ import EditEmployeeForm from "./EditEmployeeForm";
 
 interface EmployeeRowProps {
   employee: Employee;
+  services: SalonService[];
 }
 
 export default function EmployeeRow({
   employee,
+  services,
 }: EmployeeRowProps) {
   const router = useRouter();
 
   const [editing, setEditing] = useState(false);
-  const [changingStatus, setChangingStatus] =
-    useState(false);
+  const [changingStatus, setChangingStatus] = useState(false);
+  const [managingServices, setManagingServices] = useState(false);
 
   const [statusError, setStatusError] =
     useState("");
@@ -120,6 +124,14 @@ export default function EmployeeRow({
                 ? "Deactivate"
                 : "Reactivate"}
           </button>
+
+          <button
+            type="button"
+            onClick={() => setManagingServices((current) => !current)}
+            className="rounded border px-3 py-2"
+          >
+            {managingServices ? "Hide Services" : "Manage Services"}
+          </button>
         </div>
       </div>
 
@@ -127,6 +139,14 @@ export default function EmployeeRow({
         <p role="alert" className="mt-2 text-sm text-red-600">
           {statusError}
         </p>
+      )}
+
+      {managingServices && (
+        <EmployeeServicesManager
+          employeeId={employee.id}
+          employeeActive={employee.active}
+          services={services}
+        />
       )}
     </div>
   );

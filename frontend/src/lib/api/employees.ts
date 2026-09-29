@@ -1,3 +1,5 @@
+import type { SalonService } from "./serviceCatalog";
+
 export interface Employee {
   id: number;
   firstName: string;
@@ -134,6 +136,66 @@ export async function deactivateEmployee(
     return throwApiError(
       response,
       "Failed to deactivate employee",
+    );
+  }
+}
+
+export async function getEmployeeServices(
+  employeeId: number,
+): Promise<SalonService[]> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/services`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to load employee services",
+    );
+  }
+
+  return response.json();
+}
+
+export async function assignEmployeeService(
+  employeeId: number,
+  serviceId: number,
+): Promise<SalonService> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/services/${serviceId}`,
+    {
+      method: "POST",
+    },
+  );
+
+  if(!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to assign service"
+    );
+  }
+
+  return response.json();
+} 
+
+export async function removeEmployeeService(
+  employeeId: number,
+  serviceId: number,
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/services/${serviceId}`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to remove service",
     );
   }
 }

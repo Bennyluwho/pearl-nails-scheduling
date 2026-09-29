@@ -1,9 +1,13 @@
 import CreateEmployeeForm from "@/components/employees/CreateEmployeeForm";
 import EmployeeRow from "@/components/employees/EmployeeRow";
 import { getEmployees } from "@/lib/api/employees";
+import { getServices } from "@/lib/api/serviceCatalog";
 
 export default async function EmployeesPage() {
-  const employees = await getEmployees();
+  const [employees, services] = await Promise.all([
+    getEmployees(),
+    getServices()
+  ])
 
   return (
     <main className="min-h-screen bg-neutral-50 p-8 text-neutral-900">
@@ -41,7 +45,7 @@ export default async function EmployeesPage() {
           ) : (
             <div className="divide-y divide-neutral-200">
               {employees.map((employee) => (
-                <EmployeeRow key={employee.id} employee={employee} />
+                <EmployeeRow key={employee.id} employee={employee} services={services}/>
               ))}
             </div>
           )}
