@@ -128,7 +128,7 @@ export default function EmployeeRow({
           <button
             type="button"
             onClick={() => setManagingServices((current) => !current)}
-            className="rounded border px-3 py-2"
+            className="rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium hover:bg-neutral-50"
           >
             {managingServices ? "Hide Services" : "Manage Services"}
           </button>
