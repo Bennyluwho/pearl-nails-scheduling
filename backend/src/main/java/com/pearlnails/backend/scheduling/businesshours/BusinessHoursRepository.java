@@ -10,6 +10,6 @@ public interface BusinessHoursRepository extends JpaRepository<BusinessHours, Lo
     List<BusinessHours> findAllByOrderByDayOfWeekAsc();
 
     Optional<BusinessHours> findByDayOfWeek(
-        Short dayOfWeek
+        Integer dayOfWeek
     );
 }

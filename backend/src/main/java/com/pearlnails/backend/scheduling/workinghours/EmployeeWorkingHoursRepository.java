@@ -16,7 +16,7 @@ public interface EmployeeWorkingHoursRepository
     List<EmployeeWorkingHours>
         findAllByEmployee_IdAndDayOfWeekOrderByStartTimeAsc(
             Long employeeId,
-            Short dayOfWeek
+            Integer dayOfWeek
         );
 
     boolean existsByEmployee_IdAndDayOfWeekAndStartTimeLessThanAndEndTimeGreaterThan(
