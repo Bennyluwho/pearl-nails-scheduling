@@ -9,7 +9,7 @@ public record UpdateEmployeeWorkingHoursRequest(
 
     @Min(1)
     @Max(7)
-    Short dayOfWeek,
+    Integer dayOfWeek,
 
     LocalTime startTime,
 
