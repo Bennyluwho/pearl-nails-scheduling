@@ -25,4 +25,8 @@ public interface EmployeeWorkingHoursRepository
         LocalTime endTime,
         LocalTime startTime
     );
+
+    List<EmployeeWorkingHours> findAllByDayOfWeek(
+        Integer dayOfWeek
+    );
 }
