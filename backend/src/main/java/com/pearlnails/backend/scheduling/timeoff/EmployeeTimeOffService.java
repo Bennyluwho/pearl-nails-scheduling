@@ -276,7 +276,7 @@ public class EmployeeTimeOffService {
             
             if (overlaps) {
                 throw new InvalidOperationException(
-                  "Time off conflicts with an existing"  
+                  "Time off conflicts with an existing absence" 
                 );
             }
         }
