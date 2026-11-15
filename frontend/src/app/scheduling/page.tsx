@@ -1,6 +1,7 @@
 
 import BusinessHoursManager from "@/components/scheduling/BusinessHoursManager";
 import WorkingHoursManager from "@/components/scheduling/WorkingHoursManager";
+import TimeOffManager from "@/components/scheduling/TimeOffManager";
 
 import { getBusinessHours } from "@/lib/api/scheduling";
 import { getEmployees } from "@/lib/api/employees";
@@ -30,8 +31,8 @@ export default async function SchedulingPage() {
 
         <div className="space-y-8">
           <BusinessHoursManager hours={businessHours} />
-
           <WorkingHoursManager employees={employees} />
+          <TimeOffManager employees={employees} />
         </div>
       </div>
     </main>

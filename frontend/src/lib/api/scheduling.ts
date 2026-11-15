@@ -172,3 +172,107 @@ export async function deleteEmployeeWorkingHours(
     );
   }
 }
+
+
+export interface EmployeeTimeOff {
+  id: number;
+  employeeId: number;
+  timeOffDate: string;
+  fullDay: boolean;
+  startTime: string | null;
+  endTime: string | null;
+  reason: string | null;
+}
+
+export interface CreateTimeOffRequest {
+  timeOffDate: string;
+  fullDay: boolean;
+  startTime?: string | null;
+  endTime?: string | null;
+  reason?: string;
+}
+
+export type UpdateTimeOffRequest =
+  Partial<CreateTimeOffRequest>;
+
+export async function getEmployeeTimeOff(
+  employeeId: number,
+): Promise<EmployeeTimeOff[]> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/time-off`,
+    { cache: "no-store" },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to load employee time off",
+    );
+  }
+
+  return response.json();
+}
+
+export async function createEmployeeTimeOff(
+  employeeId: number,
+  request: CreateTimeOffRequest,
+): Promise<EmployeeTimeOff> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/time-off`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(request),
+    },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to create time off",
+    );
+  }
+
+  return response.json();
+}
+
+export async function updateEmployeeTimeOff(
+  employeeId: number,
+  timeOffId: number,
+  request: UpdateTimeOffRequest,
+): Promise<EmployeeTimeOff> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/time-off/${timeOffId}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(request),
+    },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to update time off",
+    );
+  }
+
+  return response.json();
+}
+
+export async function deleteEmployeeTimeOff(
+  employeeId: number,
+  timeOffId: number,
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/time-off/${timeOffId}`,
+    { method: "DELETE" },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to delete time off",
+    );
+  }
+}
