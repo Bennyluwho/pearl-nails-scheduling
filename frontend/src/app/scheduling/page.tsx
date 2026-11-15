@@ -1,9 +1,15 @@
 
 import BusinessHoursManager from "@/components/scheduling/BusinessHoursManager";
+import WorkingHoursManager from "@/components/scheduling/WorkingHoursManager";
+
 import { getBusinessHours } from "@/lib/api/scheduling";
+import { getEmployees } from "@/lib/api/employees";
 
 export default async function SchedulingPage() {
-  const businessHours = await getBusinessHours();
+  const [businessHours, employees] = await Promise.all([
+    getBusinessHours(),
+    getEmployees(),
+  ]);
 
   return (
     <main className="min-h-screen bg-neutral-50 p-8 text-neutral-900">
@@ -24,6 +30,8 @@ export default async function SchedulingPage() {
 
         <div className="space-y-8">
           <BusinessHoursManager hours={businessHours} />
+
+          <WorkingHoursManager employees={employees} />
         </div>
       </div>
     </main>

@@ -72,3 +72,103 @@ export async function updateBusinessHours(
 
     return response.json();
 }
+
+
+export interface EmployeeWorkingHours {
+  id: number;
+  employeeId: number;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+}
+
+export interface CreateWorkingHoursRequest {
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+}
+
+export type UpdateWorkingHoursRequest =
+  Partial<CreateWorkingHoursRequest>;
+
+export async function getEmployeeWorkingHours(
+  employeeId: number,
+): Promise<EmployeeWorkingHours[]> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/working-hours`,
+    { cache: "no-store" },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to load employee working hours",
+    );
+  }
+
+  return response.json();
+}
+
+export async function createEmployeeWorkingHours(
+  employeeId: number,
+  request: CreateWorkingHoursRequest,
+): Promise<EmployeeWorkingHours> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/working-hours`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(request),
+    },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to create employee shift",
+    );
+  }
+
+  return response.json();
+}
+
+export async function updateEmployeeWorkingHours(
+  employeeId: number,
+  shiftId: number,
+  request: UpdateWorkingHoursRequest,
+): Promise<EmployeeWorkingHours> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/working-hours/${shiftId}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(request),
+    },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to update employee shift",
+    );
+  }
+
+  return response.json();
+}
+
+export async function deleteEmployeeWorkingHours(
+  employeeId: number,
+  shiftId: number,
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE_URL}/employees/${employeeId}/working-hours/${shiftId}`,
+    { method: "DELETE" },
+  );
+
+  if (!response.ok) {
+    return throwApiError(
+      response,
+      "Failed to delete employee shift",
+    );
+  }
+}
