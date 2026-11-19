@@ -151,7 +151,7 @@ public class Appointment {
         return id;
     }
 
-    public Employee getEmployed() {
+    public Employee getEmployee() {
         return employee;
     }
 
@@ -205,6 +205,10 @@ public class Appointment {
 
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public AppointmentStatus getStatus() {
+        return status;
     }
 
     // SETTERS
